@@ -11,20 +11,18 @@ class TestCron extends \WP_UnitTestCase
         $cron = new Cron(
             [
                 'main_file' => __FILE__,
-                'items'     => [
-                    [
-                        'timestamp'       => 0,
-                        'hook'            => 'test_single_hook',
-                        'args'            => [1, 2, 3],
-                        'is_single_event' => true,
-                    ],
-                    [
-                        'timestamp'       => 0,
-                        'schedule'        => 'daily',
-                        'hook'            => 'test_recurring_hook',
-                        'args'            => ['x', 'y', 'z'],
-                        'is_single_event' => false,
-                    ]
+                [
+                    'timestamp'       => 0,
+                    'hook'            => 'test_single_hook',
+                    'args'            => [1, 2, 3],
+                    'is_single_event' => true,
+                ],
+                [
+                    'timestamp'       => 0,
+                    'schedule'        => 'daily',
+                    'hook'            => 'test_recurring_hook',
+                    'args'            => ['x', 'y', 'z'],
+                    'is_single_event' => false,
                 ]
             ],
         );

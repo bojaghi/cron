@@ -10,12 +10,10 @@ class TestCronSchedule extends \WP_UnitTestCase
     {
         $cs = new CronSchedule(
             [
-                'items' => [
-                    [
-                        'display'  => 'Test Cron Schedule',
-                        'interval' => 7200,
-                        'schedule' => 'test_cron',
-                    ]
+                [
+                    'display'  => 'Test Cron Schedule',
+                    'interval' => 7200,
+                    'schedule' => 'test_cron',
                 ]
             ],
         );

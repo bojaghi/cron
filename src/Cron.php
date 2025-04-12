@@ -9,32 +9,39 @@ class Cron implements Module
 {
     private array $items;
 
+    /**
+     * @param array|string $config
+     *
+     * @example Sample configuration
+     * [
+     *   'is_theme'  => false,
+     *   'main_file' => '/path/to/plugin/main/file.php',
+     *   [
+     *     'timestamp'       => 0,      // Time to invoke this hook
+     *     'schedule'        => '',     // Scheduled name, e.g. daily, hourly, and so on.
+     *     'hook'            => '',     // Hook name
+     *     'args'            => [],     // Optional: arguments.
+     *     'wp_error'        => false,  // Optional: raise wp_error if error occur.
+     *     'is_single_event' => false,  // Optional: single event, or recurring event.
+     *   ],
+     *   // ... more cron items
+     * ]
+     */
     public function __construct(array|string $config = '')
     {
-        $config = Helper::loadConfig($config);
+        [$assoc, $indexed] = Helper::separateArray(Helper::loadConfig($config));
 
-        $config = wp_parse_args(
-            $config,
+        $assoc = wp_parse_args(
+            $assoc,
             [
                 'is_theme'  => false, // true if this module is used in themes
                 'main_file' => '',    // ignore if this module is used in thees.
-                'items'     => [
-                    // Sample item
-                    // [
-                    //     'timestamp'       => 0,      // Time to invoke this hook
-                    //     'schedule'        => '',     // Scheduled name, e.g. daily, hourly, and so on.
-                    //     'hook'            => '',     // Hook name
-                    //     'args'            => [],     // Optional: arguments.
-                    //     'wp_error'        => false,  // Optional: raise wp_error if error occur.
-                    //     'is_single_event' => false,  // Optional: single event, or recurring event.
-                    // ]
-                ]
             ],
         );
 
-        $isTheme     = (bool)$config['is_theme'];
-        $mainFile    = (string)$config['main_file'];
-        $this->items = (array)$config['items'];
+        $isTheme     = (bool)$assoc['is_theme'];
+        $mainFile    = (string)$assoc['main_file'];
+        $this->items = $indexed;
 
         if ($this->items) {
             if ($isTheme) {

@@ -2,7 +2,7 @@
 
 ## 1.0.1
 
-Update code style.
+Change configuration style.
 
 ## 1.0.0
 

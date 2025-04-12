@@ -9,24 +9,25 @@ class CronSchedule implements Module
 {
     private array $items;
 
+    /**
+     * @param array|string $config
+     *
+     * @example Sample configuration
+     * [
+     *   [
+     *     'schedule' => 'every_two_hours',
+     *     'interval' => 7200,
+     *     'display'  => 'Every Two Hours',
+     *   ],
+     *   // ... more cron schedule items
+     * ]
+     */
     public function __construct(array|string $config)
     {
-        $config = Helper::loadConfig($config);
-        $config = wp_parse_args(
-            $config,
-            [
-                'items' => [
-                    // Sample item
-                    // [
-                    //     'display'  => '', // Human-readable, descriptive title.
-                    //     'internal' => 0,  // Schedule interval,
-                    //     'schedule' => '', // Schedule name. Only lowercase, number, and underscore are recommended.
-                    // ]
-                ],
-            ],
-        );
+        // Currently cron schedule has no keys.
+        [, $items] = Helper::separateArray(Helper::loadConfig($config));
 
-        $this->items = $config['items'];
+        $this->items = $items;
 
         add_filter('cron_schedules', [$this, 'cronSchedules']);
     }
